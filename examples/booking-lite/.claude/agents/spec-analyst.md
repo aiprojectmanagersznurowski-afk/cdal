@@ -9,7 +9,7 @@ tools:
   - Edit
 hooks:
   PreToolUse:
-    - command: "npx cdal hook guard-paths spec-analyst"
+    - command: "npx cdalkit hook guard-paths spec-analyst"
 ---
 <!-- CDAL GENERATED AGENT ROLE: spec-analyst -->
 

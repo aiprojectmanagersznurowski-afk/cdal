@@ -48,6 +48,6 @@ export default defineConfig({
 2. **Universal Phase Gate (`cdal phase`):**
    In runtimes without hook capabilities (Codex, Cursor, OpenHands), the phase gate checks the git diff against `origin/main`:
    ```bash
-   npx cdal phase green --base origin/main
+   npx cdalkit phase green --base origin/main
    ```
    If any `.test.ts` or `spec` file was modified during the GREEN implementation phase, the gate fails the build in CI.

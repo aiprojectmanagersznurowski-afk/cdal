@@ -14,7 +14,7 @@ Ten przewodnik przeprowadzi Cię przez proces wdrożenia jakościowych bramek CD
 Zanim cokolwiek zmienisz w kodzie, sprawdź poziom higieny pracy agentów w swoim repozytorium:
 
 ```bash
-npx cdal audit
+npx cdalkit audit
 ```
 
 Komenda uruchamia się w ułamku sekundy, działa w 100% lokalnie (bez wysyłania kodu do sieci) i generuje raport HTML (`cdal-audit-report.html`) z punktacją 0–100 oraz listą rekomendacji.
@@ -26,7 +26,7 @@ Komenda uruchamia się w ułamku sekundy, działa w 100% lokalnie (bez wysyłani
 W katalogu głównym projektu uruchom:
 
 ```bash
-npx cdal init --preset typescript-strict --yes
+npx cdalkit init --preset typescript-strict --yes
 ```
 
 Zostaną utworzone:
@@ -52,10 +52,10 @@ Zdefiniuj wymaganie z jednoznacznym ID w `docs/workorders/` lub bezpośrednio w 
 ### 2. CONTRACT (Kontrakt)
 Otwórz okno kontraktowe i zaktualizuj plik `contracts/requirements.contract.mjs`:
 ```bash
-npx cdal window open AUTH-01
+npx cdalkit window open AUTH-01
 # Edytuj kontrakt
-npx cdal window close
-npx cdal codegen
+npx cdalkit window close
+npx cdalkit codegen
 ```
 
 ### 3. RED (Faza czerwona — test)
@@ -80,7 +80,7 @@ Rola `implementer` implementuje funkcjonalność w `src/`.
 ### 5. VERIFY (Deterministyczna bramka)
 Uruchom pełny potok weryfikacyjny:
 ```bash
-npx cdal verify
+npx cdalkit verify
 ```
 Wszystkie 6 kroków (walidacja niezmienników, zgodność typów codegen, typecheck, testy, macierz trace 100% i test mutacyjny selftest) muszą przejść na zielono.
 

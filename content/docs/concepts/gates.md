@@ -14,7 +14,7 @@ In traditional development, quality guidelines are often advisory. Under CDAL, *
 `cdal trace` verifies that requirements defined in contracts are backed by automated tests:
 
 ```bash
-npx cdal trace --enforce
+npx cdalkit trace --enforce
 ```
 
 ### How to Tag Tests:

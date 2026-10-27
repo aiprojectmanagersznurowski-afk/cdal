@@ -85,11 +85,11 @@ describe('Claude Code Adapter', () => {
     // Re-updating with updated config
     const updatedConfig = {
       ...dummyConfig,
-      verify: ['pnpm typecheck', 'pnpm test', 'npx cdal selftest'],
+      verify: ['pnpm typecheck', 'pnpm test', 'npx cdalkit selftest'],
     };
     const updated = updateClaudeMd(initial, updatedConfig);
     expect(updated.startsWith('# Custom Project Rules')).toBe(true);
-    expect(updated).toContain('npx cdal selftest');
+    expect(updated).toContain('npx cdalkit selftest');
     expect(updated.indexOf(CLAUDE_SECTION_START)).toBe(updated.lastIndexOf(CLAUDE_SECTION_START));
   });
 

@@ -12,7 +12,7 @@ This project enforces strict contract-driven development quality gates:
 - **CONTRACT**: Invariants and state machines live in `contracts/*.contract.mjs`. Modify only when window is open.
 - **RED**: Write failing tests tagged with `// @REQ: <ID>`. Validate failure before implementing.
 - **GREEN**: Implement production features to pass tests. Never modify tests in this phase.
-- **VERIFY**: Run full deterministic verification pipeline (`npx cdal verify`).
+- **VERIFY**: Run full deterministic verification pipeline (`npx cdalkit verify`).
 - **REVIEW**: Validate zero drift, phase compliance, and full requirement traceability.
 
 ### 2. Role Boundaries & Phase Enforcement
@@ -24,10 +24,10 @@ This project enforces strict contract-driven development quality gates:
 
 > **Phase Gate Enforcement:**
 > In runtimes without pre-tool hooks (Codex, Cursor, etc.), phase compliance is enforced via `cdal phase`:
-> - Check RED phase: `npx cdal phase red --base <ref>`
-> - Check GREEN phase: `npx cdal phase green --base <ref>`
-> - Check CONTRACT phase: `npx cdal phase contract --base <ref>`
-> All PRs must satisfy `npx cdal phase green --base origin/main` in CI.
+> - Check RED phase: `npx cdalkit phase red --base <ref>`
+> - Check GREEN phase: `npx cdalkit phase green --base <ref>`
+> - Check CONTRACT phase: `npx cdalkit phase contract --base <ref>`
+> All PRs must satisfy `npx cdalkit phase green --base origin/main` in CI.
 
 ### 3. Deterministic Verification Steps
 - `node packages/cli/bin/cdal.mjs validate --strict`

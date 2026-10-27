@@ -19,4 +19,4 @@ Allowed write scopes: docs/workorders/, .cdal/state/
 
 
 
-> **Notice for Antigravity Runtime:** Pre-tool write interceptors may be runtime-dependent. Enforce boundaries by running `npx cdal phase <red|green>` after completion.
+> **Notice for Antigravity Runtime:** Pre-tool write interceptors may be runtime-dependent. Enforce boundaries by running `npx cdalkit phase <red|green>` after completion.

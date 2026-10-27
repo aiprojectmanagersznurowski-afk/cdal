@@ -2,6 +2,21 @@
   "name": "@cdal/adapters",
   "version": "0.1.0",
   "description": "Agent runtime adapters for CDAL (Claude Code, AGENTS.md, Antigravity)",
+  "license": "Apache-2.0",
+  "author": "Michał Sznurowski",
+  "homepage": "https://cdal-henna.vercel.app",
+  "keywords": [
+    "ai",
+    "agents",
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "antigravity",
+    "quality-gates",
+    "contracts",
+    "testing",
+    "vibecoding"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -25,5 +40,11 @@
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

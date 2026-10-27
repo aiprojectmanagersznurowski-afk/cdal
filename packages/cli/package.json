@@ -1,10 +1,26 @@
 {
-  "name": "cdal",
+  "name": "cdalkit",
   "version": "0.1.0",
   "description": "Command-line interface and hook router for CDAL (Contract-Driven Agentic Loop)",
+  "license": "Apache-2.0",
+  "author": "Michał Sznurowski",
+  "homepage": "https://cdal-henna.vercel.app",
+  "keywords": [
+    "ai",
+    "agents",
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "antigravity",
+    "quality-gates",
+    "contracts",
+    "testing",
+    "vibecoding"
+  ],
   "type": "module",
   "bin": {
-    "cdal": "./bin/cdal.mjs"
+    "cdal": "./bin/cdal.mjs",
+    "cdalkit": "./bin/cdal.mjs"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -35,5 +51,11 @@
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

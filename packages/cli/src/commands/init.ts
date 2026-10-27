@@ -157,7 +157,7 @@ export default defineConfig({
     console.log(pc.bold(pc.green('\n🎉 CDAL initialized successfully!')));
     console.log(pc.cyan('Next steps:'));
     console.log(pc.dim('  1. Review contracts in contracts/*.contract.mjs'));
-    console.log(pc.dim('  2. Run `npx cdal doctor` to verify environment health'));
-    console.log(pc.dim('  3. Run `npx cdal verify` to test the loop gate\n'));
+    console.log(pc.dim('  2. Run `npx cdalkit doctor` to verify environment health'));
+    console.log(pc.dim('  3. Run `npx cdalkit verify` to test the loop gate\n'));
   },
 });

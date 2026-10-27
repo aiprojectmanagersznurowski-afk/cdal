@@ -11,5 +11,5 @@ Execute CDAL loop:
 2. **CONTRACT**: Update contracts if needed.
 3. **RED**: Write failing tests with `test-author` subagent.
 4. **GREEN**: Implement production features with `implementer` subagent.
-5. **VERIFY**: Run `npx cdal verify`.
+5. **VERIFY**: Run `npx cdalkit verify`.
 6. **REVIEW**: Verify quality gates with `reviewer` subagent.

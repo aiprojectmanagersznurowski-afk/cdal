@@ -10,7 +10,7 @@ tools:
   - Bash
 hooks:
   PreToolUse:
-    - command: "npx cdal hook guard-paths contract-steward"
+    - command: "npx cdalkit hook guard-paths contract-steward"
 ---
 <!-- CDAL GENERATED AGENT ROLE: contract-steward -->
 

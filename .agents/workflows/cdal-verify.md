@@ -8,5 +8,5 @@ description: Run full deterministic CDAL verification pipeline
 
 Run deterministic verification pipeline:
 ```bash
-npx cdal verify
+npx cdalkit verify
 ```

@@ -61,7 +61,7 @@ pnpm add -D @cdal/cli @cdal/core
 
 ### Step 3: Run Self-Test Verification
 ```bash
-npx cdal selftest
+npx cdalkit selftest
 ```
 You should see: `✔ Every quality gate rule is verified active and firing.`
 
@@ -91,7 +91,7 @@ Absolute rules you MUST NEVER violate:
 3. CONTRACTS: Business invariants and state machines live in `contracts/*.contract.mjs`.
    Never modify a contract unless the user explicitly opens a contract window.
 
-4. VERIFICATION: Before finishing a task, run `npx cdal verify`.
+4. VERIFICATION: Before finishing a task, run `npx cdalkit verify`.
 ```
 
 ### B. For Claude Code Users (`CLAUDE.md`)
@@ -103,7 +103,7 @@ Create `CLAUDE.md` in your project root:
 - Before writing code, verify requirements in contracts/
 - Tests must be tagged with `// @REQ: <ID>`
 - Never modify tests during implementation phase
-- Run `npx cdal verify` before finishing turn
+- Run `npx cdalkit verify` before finishing turn
 ```
 
 ### C. For Windsurf Users (`.windsurfrules`)
@@ -130,7 +130,7 @@ Don't use vague prompts that lead to hallucinations. Use the simple 3-step loop:
 ### Step 4: Verify Quality (VERIFY)
 Run in terminal:
 ```bash
-npx cdal verify
+npx cdalkit verify
 ```
 Instantly validates 100% requirement traceability, zero `@ts-ignore` escapes, and zero contract drift.
 
@@ -147,7 +147,7 @@ Our hard rules:
 2. First, create a failing test tagged with // @REQ: REQ-XXX.
 3. Then write production code. Never alter tests to hide implementation bugs.
 4. Zero @ts-ignore, zero `as any`, zero linter suppressions.
-5. Finish by running `npx cdal verify`.
+5. Finish by running `npx cdalkit verify`.
 
 Confirm you understand these rules and ask me for the first REQ-* requirement.
 ```
@@ -157,5 +157,5 @@ Confirm you understand these rules and ask me for the first REQ-* requirement.
 ## 6. Community & Direct Support
 
 - 📦 **GitHub Repository:** [github.com/aiprojectmanagersznurowski-afk/cdal_methodology](https://github.com/aiprojectmanagersznurowski-afk/cdal_methodology)
-- 💡 **Free Local Repository Audit:** `npx cdal audit`
+- 💡 **Free Local Repository Audit:** `npx cdalkit audit`
 - 📬 **Contact & Feedback:** `kontakt@cdal.dev` (response within 24h)

@@ -31,7 +31,7 @@ description: "Complete command-line reference for cdal CLI commands, flags, and 
 **Initialize CDAL in an existing or new project**
 
 ```bash
-npx cdal init [options]
+npx cdalkit init [options]
 ```
 
 Scaffolds cdal.config.mjs, contracts directory, agent runtime adapters (.claude, .agents, AGENTS.md), and adds verification scripts to package.json.
@@ -45,7 +45,7 @@ Scaffolds cdal.config.mjs, contracts directory, agent runtime adapters (.claude,
 ### Example
 
 ```bash
-npx cdal init --preset typescript-strict --yes
+npx cdalkit init --preset typescript-strict --yes
 ```
 
 ---
@@ -55,7 +55,7 @@ npx cdal init --preset typescript-strict --yes
 **Validate contract invariants and integrity**
 
 ```bash
-npx cdal validate [options]
+npx cdalkit validate [options]
 ```
 
 Executes static semantic invariant rules across all registered contract kinds (requirements, state-machine, policies, and custom kinds).
@@ -69,7 +69,7 @@ Executes static semantic invariant rules across all registered contract kinds (r
 ### Example
 
 ```bash
-npx cdal validate --strict
+npx cdalkit validate --strict
 ```
 
 ---
@@ -79,7 +79,7 @@ npx cdal validate --strict
 **Generate deterministic TypeScript types and architecture diagrams**
 
 ```bash
-npx cdal codegen [options]
+npx cdalkit codegen [options]
 ```
 
 Emits immutable TypeScript interfaces, constants, and mermaid markdown diagrams directly from contracts as single source of truth.
@@ -92,7 +92,7 @@ Emits immutable TypeScript interfaces, constants, and mermaid markdown diagrams 
 ### Example
 
 ```bash
-npx cdal codegen --check
+npx cdalkit codegen --check
 ```
 
 ---
@@ -102,7 +102,7 @@ npx cdal codegen --check
 **Manage contract window for protected path mutations**
 
 ```bash
-npx cdal window <open|close|status> [ticket]
+npx cdalkit window <open|close|status> [ticket]
 ```
 
 Enforces controlled mutation windows for contracts and generated files. Protected paths can only be edited when the contract window is open.
@@ -116,9 +116,9 @@ Enforces controlled mutation windows for contracts and generated files. Protecte
 ### Example
 
 ```bash
-npx cdal window open WO-104
+npx cdalkit window open WO-104
 # edit contracts/*.contract.mjs
-npx cdal window close
+npx cdalkit window close
 ```
 
 ---
@@ -128,7 +128,7 @@ npx cdal window close
 **Verify requirement-to-test traceability matrix**
 
 ```bash
-npx cdal trace [options]
+npx cdalkit trace [options]
 ```
 
 Scans test suites for // @REQ: <ID> markers and validates 100% coverage of active contract requirements.
@@ -142,7 +142,7 @@ Scans test suites for // @REQ: <ID> markers and validates 100% coverage of activ
 ### Example
 
 ```bash
-npx cdal trace --enforce
+npx cdalkit trace --enforce
 ```
 
 ---
@@ -152,7 +152,7 @@ npx cdal trace --enforce
 **Enforce CDAL loop phase gates from git diff**
 
 ```bash
-npx cdal phase <contract|red|green> [options]
+npx cdalkit phase <contract|red|green> [options]
 ```
 
 Enforces phase boundaries across IDEs and CI: CONTRACT (only contracts modified), RED (only test files modified), GREEN (production code modified, zero test modifications).
@@ -164,7 +164,7 @@ Enforces phase boundaries across IDEs and CI: CONTRACT (only contracts modified)
 ### Example
 
 ```bash
-npx cdal phase green --base origin/main
+npx cdalkit phase green --base origin/main
 ```
 
 ---
@@ -174,7 +174,7 @@ npx cdal phase green --base origin/main
 **Execute mutation testing on quality gates themselves**
 
 ```bash
-npx cdal selftest [options]
+npx cdalkit selftest [options]
 ```
 
 Tests whether validator invariants and guardrails actually fire red when violated. Proves gates are non-decorative.
@@ -187,7 +187,7 @@ Tests whether validator invariants and guardrails actually fire red when violate
 ### Example
 
 ```bash
-npx cdal selftest
+npx cdalkit selftest
 ```
 
 ---
@@ -197,7 +197,7 @@ npx cdal selftest
 **Regenerate agent runtime configs from cdal.config.mjs**
 
 ```bash
-npx cdal sync [options]
+npx cdalkit sync [options]
 ```
 
 Keeps .claude/settings.json, .agents/, and AGENTS.md synchronized with role definitions in cdal.config.mjs.
@@ -209,7 +209,7 @@ Keeps .claude/settings.json, .agents/, and AGENTS.md synchronized with role defi
 ### Example
 
 ```bash
-npx cdal sync --check
+npx cdalkit sync --check
 ```
 
 ---
@@ -219,7 +219,7 @@ npx cdal sync --check
 **Run full deterministic verification pipeline**
 
 ```bash
-npx cdal verify [options]
+npx cdalkit verify [options]
 ```
 
 Executes the complete verification suite defined in cdal.config.mjs (validate, codegen --check, typecheck, lint, test, trace, selftest).
@@ -232,7 +232,7 @@ Executes the complete verification suite defined in cdal.config.mjs (validate, c
 ### Example
 
 ```bash
-npx cdal verify
+npx cdalkit verify
 ```
 
 ---
@@ -242,7 +242,7 @@ npx cdal verify
 **PreToolUse entrypoint for agent runtime hook routing**
 
 ```bash
-npx cdal hook <guard-paths|guard-forbidden|guard-bash|session-context|log-subagent> [role] [options]
+npx cdalkit hook <guard-paths|guard-forbidden|guard-bash|session-context|log-subagent> [role] [options]
 ```
 
 Reads tool execution payload from stdin. Validates write scopes (denyTests), forbidden patterns, and bash commands. Exits with code 2 to block tool execution.
@@ -255,7 +255,7 @@ Reads tool execution payload from stdin. Validates write scopes (denyTests), for
 ### Example
 
 ```bash
-echo '{"tool_name":"Edit","tool_input":{"file_path":"test.ts"}}' | npx cdal hook guard-paths implementer
+echo '{"tool_name":"Edit","tool_input":{"file_path":"test.ts"}}' | npx cdalkit hook guard-paths implementer
 ```
 
 ---
@@ -265,7 +265,7 @@ echo '{"tool_name":"Edit","tool_input":{"file_path":"test.ts"}}' | npx cdal hook
 **Scan repository for AI hygiene and export offline HTML report**
 
 ```bash
-npx cdal audit [path] [options]
+npx cdalkit audit [path] [options]
 ```
 
 Runs 8 static checks (< 20s) evaluating agent configuration, type silencing density, skipped tests, role separation, traceability, and secrets. Pure local execution, zero network requests.
@@ -279,7 +279,7 @@ Runs 8 static checks (< 20s) evaluating agent configuration, type silencing dens
 ### Example
 
 ```bash
-npx cdal audit --html ./report.html
+npx cdalkit audit --html ./report.html
 ```
 
 ---
@@ -289,7 +289,7 @@ npx cdal audit --html ./report.html
 **Diagnose CDAL installation and environment health**
 
 ```bash
-npx cdal doctor
+npx cdalkit doctor
 ```
 
 Verifies Node.js version (>=20.9), git repository state, config validity, hook bindings, and detects configuration drift.
@@ -297,7 +297,7 @@ Verifies Node.js version (>=20.9), git repository state, config validity, hook b
 ### Example
 
 ```bash
-npx cdal doctor
+npx cdalkit doctor
 ```
 
 ---

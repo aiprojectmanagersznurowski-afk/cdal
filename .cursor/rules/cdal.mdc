@@ -11,6 +11,6 @@ This project enforces Contract-Driven Agentic Loop (CDAL) quality gates:
 2. **Phase Discipline**:
    - RED phase: Only write tests (tagged with `// @REQ: <ID>`).
    - GREEN phase: Only write production code. Do NOT touch or weaken tests.
-   - Run `npx cdal phase green` before submitting changes.
-3. **Verification**: Always run `pnpm verify` or `npx cdal verify` before declaring completion.
+   - Run `npx cdalkit phase green` before submitting changes.
+3. **Verification**: Always run `pnpm verify` or `npx cdalkit verify` before declaring completion.
 4. **Forbidden Patterns**: Never use `@ts-ignore` or `as any` to silence compiler errors.

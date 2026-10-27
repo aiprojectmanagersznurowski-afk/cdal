@@ -48,11 +48,11 @@ export function generateRecommendations(
               : 'Implement hard PreToolUse hooks for AI agents',
           description:
             lang === 'pl'
-              ? 'Same prompty w CLAUDE.md/AGENTS.md nie gwarantują dyscypliny. Skonfiguruj hook PreToolUse w .claude/settings.json lub .agents/ używając `npx cdal sync`.'
-              : 'Prompt instructions alone do not enforce agent discipline. Configure PreToolUse hooks in .claude/settings.json or .agents/ using `npx cdal sync`.',
+              ? 'Same prompty w CLAUDE.md/AGENTS.md nie gwarantują dyscypliny. Skonfiguruj hook PreToolUse w .claude/settings.json lub .agents/ używając `npx cdalkit sync`.'
+              : 'Prompt instructions alone do not enforce agent discipline. Configure PreToolUse hooks in .claude/settings.json or .agents/ using `npx cdalkit sync`.',
           priority: 'high',
           docsUrl: 'https://cdal.dev/docs/concepts/roles',
-          remediationSnippet: 'npx cdal init --preset typescript-strict',
+          remediationSnippet: 'npx cdalkit init --preset typescript-strict',
         });
         break;
 
@@ -70,7 +70,7 @@ export function generateRecommendations(
               : 'Type silencing hides model hallucinations and runtime crashes. Enforce forbidden rules in cdal.config.mjs.',
           priority: 'high',
           docsUrl: 'https://cdal.dev/docs/presets/typescript-strict',
-          remediationSnippet: 'npx cdal verify',
+          remediationSnippet: 'npx cdalkit verify',
         });
         break;
 
@@ -122,7 +122,7 @@ export function generateRecommendations(
               : 'Define a requirements contract and tag tests with `// @REQ: <ID>`. Run `cdal trace --enforce` in CI.',
           priority: 'medium',
           docsUrl: 'https://cdal.dev/docs/concepts/loop#trace',
-          remediationSnippet: 'npx cdal trace --enforce',
+          remediationSnippet: 'npx cdalkit trace --enforce',
         });
         break;
 
@@ -174,7 +174,7 @@ export function generateRecommendations(
               : 'Add `cdal codegen --check` to CI to prevent out-of-sync generated code.',
           priority: 'low',
           docsUrl: 'https://cdal.dev/docs/concepts/contracts#deterministic-codegen',
-          remediationSnippet: 'npx cdal codegen --check',
+          remediationSnippet: 'npx cdalkit codegen --check',
         });
         break;
     }

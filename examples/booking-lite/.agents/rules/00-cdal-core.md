@@ -20,4 +20,4 @@ This project operates under the Contract-Driven Agentic Loop (CDAL).
 - Strict TypeScript: no `@ts-ignore`, no `as any`
 
 ## 4. Phase Gates
-Always run `npx cdal phase <contract|red|green>` to verify git diff compliance.
+Always run `npx cdalkit phase <contract|red|green>` to verify git diff compliance.

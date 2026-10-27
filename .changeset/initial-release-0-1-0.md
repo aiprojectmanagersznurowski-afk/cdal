@@ -3,7 +3,7 @@
 "@cdal/kinds": minor
 "@cdal/adapters": minor
 "@cdal/audit": minor
-"cdal": minor
+"cdalkit": minor
 ---
 
 Initial release of CDAL Kit (Contract-Driven Agentic Loop) v0.1.0:

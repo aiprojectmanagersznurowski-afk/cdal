@@ -9,30 +9,30 @@ export function generateClaudeSettings(): string {
       PreToolUse: [
         {
           matcher: 'Edit|Write|NotebookEdit',
-          command: 'npx cdal hook guard-paths',
+          command: 'npx cdalkit hook guard-paths',
         },
         {
           matcher: 'Edit|Write',
-          command: 'npx cdal hook guard-forbidden',
+          command: 'npx cdalkit hook guard-forbidden',
         },
         {
           matcher: 'Bash',
-          command: 'npx cdal hook guard-bash',
+          command: 'npx cdalkit hook guard-bash',
         },
       ],
       SessionStart: [
         {
-          command: 'npx cdal hook session-context',
+          command: 'npx cdalkit hook session-context',
         },
       ],
       SubagentStart: [
         {
-          command: 'npx cdal hook log-subagent',
+          command: 'npx cdalkit hook log-subagent',
         },
       ],
       SubagentStop: [
         {
-          command: 'npx cdal hook log-subagent',
+          command: 'npx cdalkit hook log-subagent',
         },
       ],
     },
@@ -144,7 +144,7 @@ export function generateClaudeAgents(
       ...defaultInfo.tools.map((t) => `  - ${t}`),
       'hooks:',
       '  PreToolUse:',
-      `    - command: "npx cdal hook guard-paths ${roleName}"`,
+      `    - command: "npx cdalkit hook guard-paths ${roleName}"`,
       '---',
       '',
     ].join('\n');
@@ -182,11 +182,11 @@ description: Manage contract window and update contracts as single source of tru
 
 # /cdal-contract
 
-1. Open contract window: \`npx cdal window open <TICKET>\`
+1. Open contract window: \`npx cdalkit window open <TICKET>\`
 2. Run \`contract-steward\` to update \`contracts/*.contract.mjs\`.
-3. Validate invariants: \`npx cdal validate --strict\`
-4. Regenerate artifacts: \`npx cdal codegen\`
-5. Close contract window: \`npx cdal window close\`
+3. Validate invariants: \`npx cdalkit validate --strict\`
+4. Regenerate artifacts: \`npx cdalkit codegen\`
+5. Close contract window: \`npx cdalkit window close\`
 `,
     },
     {
@@ -229,9 +229,9 @@ description: Run pre-merge review and audit on active branch
 # /cdal-review
 
 Runs \`reviewer\` role to verify:
-- \`npx cdal phase green\`
-- \`npx cdal trace --enforce\`
-- \`npx cdal selftest\`
+- \`npx cdalkit phase green\`
+- \`npx cdalkit trace --enforce\`
+- \`npx cdalkit selftest\`
 `,
     },
     {

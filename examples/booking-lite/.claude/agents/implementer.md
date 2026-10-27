@@ -10,7 +10,7 @@ tools:
   - Bash
 hooks:
   PreToolUse:
-    - command: "npx cdal hook guard-paths implementer"
+    - command: "npx cdalkit hook guard-paths implementer"
 ---
 <!-- CDAL GENERATED AGENT ROLE: implementer -->
 

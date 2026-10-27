@@ -8,7 +8,7 @@ tools:
   - Bash
 hooks:
   PreToolUse:
-    - command: "npx cdal hook guard-paths reviewer"
+    - command: "npx cdalkit hook guard-paths reviewer"
 ---
 <!-- CDAL GENERATED AGENT ROLE: reviewer -->
 

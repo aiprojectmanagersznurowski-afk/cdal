@@ -57,7 +57,7 @@ PLAN ──► CONTRACT ──► RED ──► GREEN ──► VERIFY ──►
 Scan your existing repository for AI quality smells, type silencing density, skipped tests, and untracked agent edits without sending a single byte to the cloud:
 
 ```bash
-npx cdal audit
+npx cdalkit audit
 ```
 
 Generates a standalone, interactive HTML report with a 0–100 score calibrated against real-world production repos:
@@ -82,7 +82,7 @@ HTML Report saved to: .cdal/audit-report.html
 Scaffold CDAL contracts, runtime adapters, and CI workflows:
 
 ```bash
-npx cdal init
+npx cdalkit init
 ```
 
 This provisions:
@@ -98,7 +98,7 @@ This provisions:
 CDAL enforces a strict 7-step verification gate before any pull request can be merged:
 
 ```bash
-npx cdal verify
+npx cdalkit verify
 ```
 
 ```
@@ -170,7 +170,7 @@ Inspect [`examples/booking-lite`](./examples/booking-lite) for a complete, produ
 
 ## Contributing
 
-We welcome community contributions! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and ensure all pull requests pass `npx cdal verify` before submitting.
+We welcome community contributions! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and ensure all pull requests pass `npx cdalkit verify` before submitting.
 
 ---
 

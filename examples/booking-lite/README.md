@@ -35,10 +35,10 @@ Every change starts with a requirement ID. In `contracts/requirements.contract.m
 ### Step 2: CONTRACT (update the contract)
 Open the contract window and generate the artifacts:
 ```bash
-npx cdal window open "Add VIP discount policy"
+npx cdalkit window open "Add VIP discount policy"
 # edit contracts/policies.contract.mjs
-npx cdal codegen
-npx cdal window close
+npx cdalkit codegen
+npx cdalkit window close
 ```
 The generated TypeScript files in `src/generated/contracts/` immediately pick up the new types, with no hand-written boilerplate.
 
@@ -61,7 +61,7 @@ The `implementer` role writes code in `src/booking-service.ts`.
 ```bash
 pnpm verify
 # or:
-npx cdal verify
+npx cdalkit verify
 ```
 The verification gate automatically checks:
 1. Contract consistency (`cdal validate --strict`)
@@ -74,7 +74,7 @@ The verification gate automatically checks:
 
 ### Step 6: SELFTEST (check that the gates really guard the code)
 ```bash
-npx cdal selftest
+npx cdalkit selftest
 ```
 The mutation engine creates temporary copies of the contracts and injects mutations. If the validator doesn't catch the defect, selftest fails.
 
@@ -86,7 +86,7 @@ The mutation engine creates temporary copies of the contracts and injects mutati
 |---|---|
 | `pnpm test` | Run the Vitest tests |
 | `pnpm typecheck` | TypeScript static analysis |
-| `npx cdal codegen` | Deterministically generate types and docs from contracts |
-| `npx cdal trace --enforce` | Verify 100% requirement coverage (@REQ) |
-| `npx cdal selftest` | Mutation tests of contract rules and guardrail probes |
-| `npx cdal verify` | The full quality gate |
+| `npx cdalkit codegen` | Deterministically generate types and docs from contracts |
+| `npx cdalkit trace --enforce` | Verify 100% requirement coverage (@REQ) |
+| `npx cdalkit selftest` | Mutation tests of contract rules and guardrail probes |
+| `npx cdalkit verify` | The full quality gate |

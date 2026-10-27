@@ -20,4 +20,4 @@ Allowed write scopes: src/**, .cdal/state/**
 Physical constraint: You are strictly forbidden from modifying test files.
 
 
-> **Notice for Antigravity Runtime:** Pre-tool write interceptors may be runtime-dependent. Enforce boundaries by running `npx cdal phase <red|green>` after completion.
+> **Notice for Antigravity Runtime:** Pre-tool write interceptors may be runtime-dependent. Enforce boundaries by running `npx cdalkit phase <red|green>` after completion.

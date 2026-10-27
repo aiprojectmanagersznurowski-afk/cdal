@@ -25,4 +25,4 @@ This project operates under the Contract-Driven Agentic Loop (CDAL).
 - `gate-evasion-prisma-recast`: Double-casting Prisma client via unknown (prisma as unknown as X) is prohibited. It circumvents type verification.
 
 ## 4. Phase Gates
-Always run `npx cdal phase <contract|red|green>` to verify git diff compliance.
+Always run `npx cdalkit phase <contract|red|green>` to verify git diff compliance.

@@ -72,7 +72,7 @@ export function generateAntigravityAgents(
 
     const note = !hasWrite
       ? '\n> **This agent is read-only.** It cannot write or replace file contents. Document any recommendations in review summaries instead of attempting to write files.\n'
-      : '\n> **Notice for Antigravity Runtime:** Pre-tool write interceptors may be runtime-dependent. Enforce boundaries by running `npx cdal phase <red|green>` after completion.\n';
+      : '\n> **Notice for Antigravity Runtime:** Pre-tool write interceptors may be runtime-dependent. Enforce boundaries by running `npx cdalkit phase <red|green>` after completion.\n';
 
     const body = `You are the ${roleName} agent in the CDAL workflow.
 Allowed write scopes: ${roleDef.write.join(', ')}
@@ -107,11 +107,11 @@ Initiate planning phase of CDAL:
       desc: 'Manage contract window and update contracts as single source of truth',
       body: `# /cdal-contract
 
-1. Open contract window: \`run_command: npx cdal window open {{args}}\`
+1. Open contract window: \`run_command: npx cdalkit window open {{args}}\`
 2. Update contracts in \`contracts/*.contract.mjs\`.
-3. Validate invariants: \`run_command: npx cdal validate --strict\`
-4. Regenerate code: \`run_command: npx cdal codegen\`
-5. Close contract window: \`run_command: npx cdal window close\`
+3. Validate invariants: \`run_command: npx cdalkit validate --strict\`
+4. Regenerate code: \`run_command: npx cdalkit codegen\`
+5. Close contract window: \`run_command: npx cdalkit window close\`
 `,
     },
     {
@@ -124,7 +124,7 @@ Execute CDAL loop:
 2. **CONTRACT**: Update contracts if needed.
 3. **RED**: Write failing tests with \`test-author\` subagent.
 4. **GREEN**: Implement production features with \`implementer\` subagent.
-5. **VERIFY**: Run \`npx cdal verify\`.
+5. **VERIFY**: Run \`npx cdalkit verify\`.
 6. **REVIEW**: Verify quality gates with \`reviewer\` subagent.
 `,
     },
@@ -135,7 +135,7 @@ Execute CDAL loop:
 
 Run deterministic verification pipeline:
 \`\`\`bash
-npx cdal verify
+npx cdalkit verify
 \`\`\`
 `,
     },
@@ -145,9 +145,9 @@ npx cdal verify
       body: `# /cdal-review
 
 Verify review gates:
-1. \`run_command: npx cdal phase green\`
-2. \`run_command: npx cdal trace --enforce\`
-3. \`run_command: npx cdal selftest\`
+1. \`run_command: npx cdalkit phase green\`
+2. \`run_command: npx cdalkit trace --enforce\`
+3. \`run_command: npx cdalkit selftest\`
 `,
     },
     {
@@ -199,7 +199,7 @@ ${verifySteps}
 ${forbiddenSummary || '- Strict TypeScript: no `@ts-ignore`, no `as any`'}
 
 ## 4. Phase Gates
-Always run \`npx cdal phase <contract|red|green>\` to verify git diff compliance.
+Always run \`npx cdalkit phase <contract|red|green>\` to verify git diff compliance.
 `;
 
   if (content.length > ANTIGRAVITY_RULES_CHAR_LIMIT) {

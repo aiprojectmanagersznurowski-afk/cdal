@@ -7,6 +7,6 @@ description: Run pre-merge review and audit on active branch
 # /cdal-review
 
 Verify review gates:
-1. `run_command: npx cdal phase green`
-2. `run_command: npx cdal trace --enforce`
-3. `run_command: npx cdal selftest`
+1. `run_command: npx cdalkit phase green`
+2. `run_command: npx cdalkit trace --enforce`
+3. `run_command: npx cdalkit selftest`

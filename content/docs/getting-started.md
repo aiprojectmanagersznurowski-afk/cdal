@@ -14,7 +14,7 @@ CDAL works with both existing TypeScript/JavaScript applications (Next.js, Node 
 Before making any changes to your project, you can run a local, read-only AI hygiene audit on your repository:
 
 ```bash
-npx cdal audit
+npx cdalkit audit
 ```
 
 This scans your codebase locally in < 15 seconds (zero network calls, zero data leaks) and generates a standalone offline HTML report evaluating:
@@ -32,13 +32,13 @@ This scans your codebase locally in < 15 seconds (zero network calls, zero data 
 Run the interactive setup wizard in the root of your project:
 
 ```bash
-npx cdal init
+npx cdalkit init
 ```
 
 Or run non-interactively with safe default presets:
 
 ```bash
-npx cdal init --preset typescript-strict --yes
+npx cdalkit init --preset typescript-strict --yes
 ```
 
 This generates:
@@ -55,7 +55,7 @@ This generates:
 Run the deterministic verification pipeline:
 
 ```bash
-npx cdal verify
+npx cdalkit verify
 ```
 
 CDAL executes each step sequentially:
@@ -75,11 +75,11 @@ When launching an agent (e.g., in Claude Code):
 1. **PLAN:** Specify work order requirements with explicit IDs in `docs/workorders/` (e.g. `AUTH-REQ-LOGIN`).
 2. **CONTRACT:** Define or update the domain contract:
    ```bash
-   npx cdal window open AUTH-101
+   npx cdalkit window open AUTH-101
    # Edit contracts/requirements.contract.mjs
-   npx cdal window close
-   npx cdal codegen
+   npx cdalkit window close
+   npx cdalkit codegen
    ```
 3. **RED:** Author failing tests in `test/auth.test.ts` tagged with `// @REQ: AUTH-REQ-LOGIN`.
 4. **GREEN:** Have the `implementer` agent role implement the feature. Notice that if the agent attempts to edit `test/auth.test.ts`, the PreToolUse hook immediately rejects the write with exit code 2.
-5. **VERIFY:** Run `npx cdal verify` to seal the loop.
+5. **VERIFY:** Run `npx cdalkit verify` to seal the loop.

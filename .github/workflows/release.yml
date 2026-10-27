@@ -39,8 +39,13 @@ jobs:
       - name: Run verification gate
         run: pnpm verify
 
+      - name: Build packages
+        run: pnpm build
+
+      # npm provenance is only supported for public source repositories.
       - name: Publish changesets
-        run: pnpm changeset publish --provenance
+        run: pnpm changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: ${{ !github.event.repository.private }}

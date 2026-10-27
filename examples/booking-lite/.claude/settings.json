@@ -3,30 +3,30 @@
     "PreToolUse": [
       {
         "matcher": "Edit|Write|NotebookEdit",
-        "command": "npx cdal hook guard-paths"
+        "command": "npx cdalkit hook guard-paths"
       },
       {
         "matcher": "Edit|Write",
-        "command": "npx cdal hook guard-forbidden"
+        "command": "npx cdalkit hook guard-forbidden"
       },
       {
         "matcher": "Bash",
-        "command": "npx cdal hook guard-bash"
+        "command": "npx cdalkit hook guard-bash"
       }
     ],
     "SessionStart": [
       {
-        "command": "npx cdal hook session-context"
+        "command": "npx cdalkit hook session-context"
       }
     ],
     "SubagentStart": [
       {
-        "command": "npx cdal hook log-subagent"
+        "command": "npx cdalkit hook log-subagent"
       }
     ],
     "SubagentStop": [
       {
-        "command": "npx cdal hook log-subagent"
+        "command": "npx cdalkit hook log-subagent"
       }
     ]
   }

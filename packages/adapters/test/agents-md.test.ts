@@ -37,8 +37,8 @@ describe('AGENTS.md & Cursor Adapter', () => {
     const updated = updateAgentsMd(userInstructions, dummyConfig);
     expect(updated.startsWith('# Core Project Directives')).toBe(true);
     expect(updated).toContain(AGENTS_MD_SECTION_START);
-    expect(updated).toContain('cdal phase red');
-    expect(updated).toContain('cdal phase green');
+    expect(updated).toContain('cdalkit phase red');
+    expect(updated).toContain('cdalkit phase green');
   });
 
   it('generates .cursor/rules/cdal.mdc with valid frontmatter', () => {

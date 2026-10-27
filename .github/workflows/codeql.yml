@@ -11,6 +11,9 @@ on:
 jobs:
   analyze:
     name: CodeQL Analysis
+    # Code scanning is free for public repositories only (private ones need GitHub
+    # Advanced Security), so the analysis runs in the public `cdal` repo.
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     permissions:
       actions: read

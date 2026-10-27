@@ -6,8 +6,8 @@ description: Manage contract window and update contracts as single source of tru
 
 # /cdal-contract
 
-1. Open contract window: `run_command: npx cdal window open {{args}}`
+1. Open contract window: `run_command: npx cdalkit window open {{args}}`
 2. Update contracts in `contracts/*.contract.mjs`.
-3. Validate invariants: `run_command: npx cdal validate --strict`
-4. Regenerate code: `run_command: npx cdal codegen`
-5. Close contract window: `run_command: npx cdal window close`
+3. Validate invariants: `run_command: npx cdalkit validate --strict`
+4. Regenerate code: `run_command: npx cdalkit codegen`
+5. Close contract window: `run_command: npx cdalkit window close`
