@@ -299,7 +299,7 @@ export const REQUIREMENTS = [
   },
   {
     id: 'CDAL-REQ-PRO-INSTALL',
-    source: 'docs/production-plan.md#pro',
+    source: 'docs/00-METHODOLOGY.md#pro',
     statement:
       'CLI must install CDAL Pro content into a project from the private cdal-pro repository or a local copy, driven by the pro.manifest.json shipped with that content.',
     acceptance: [
