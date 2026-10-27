@@ -1,5 +1,11 @@
 # cdalkit
 
+## 0.1.5
+
+### Patch Changes
+
+- `cdalkit pro install` clones CDAL Pro from the `cdalkit` GitHub organization (Polar only grants repository access on organization repositories).
+
 ## 0.1.4
 
 ### Patch Changes

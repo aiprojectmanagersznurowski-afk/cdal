@@ -6,7 +6,7 @@ import { defineCommand } from 'citty';
 import pc from 'picocolors';
 import { ProInstallError, installPro } from '../pro/install.js';
 
-export const PRO_REPOSITORY_URL = 'https://github.com/aiprojectmanagersznurowski-afk/cdal-pro.git';
+export const PRO_REPOSITORY_URL = 'https://github.com/cdalkit/cdal-pro.git';
 
 /** Clones a git source into a temp directory; local directories are used as-is. */
 function resolveSource(from: string): { dir: string; cleanup: () => void } {
