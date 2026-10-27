@@ -1,0 +1,24 @@
+{
+  "name": "booking-lite",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Example Node/TS reservation app demonstrating Contract-Driven Agentic Loop (CDAL)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "verify": "node ../../packages/cli/bin/cdal.mjs verify",
+    "selftest": "node ../../packages/cli/bin/cdal.mjs selftest",
+    "trace": "node ../../packages/cli/bin/cdal.mjs trace --enforce"
+  },
+  "dependencies": {
+    "@cdal/core": "workspace:*",
+    "@cdal/kinds": "workspace:*"
+  },
+  "devDependencies": {
+    "cdal": "workspace:*",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}

@@ -1,0 +1,219 @@
+import type { ContractKind, EmitCtx, Finding, GeneratedFile, Mutation, Rule } from '@cdal/core';
+
+export interface PolicyBand {
+  name: string;
+  max?: number;
+  min?: number;
+  color?: string;
+}
+
+export interface Policy {
+  id: string;
+  scope: string;
+  description: string;
+  unit: string;
+  value?: number;
+  bands?: PolicyBand[];
+  req?: string[];
+}
+
+export interface PoliciesData {
+  policies: Policy[];
+}
+
+const findDuplicates = (arr: string[]): string[] => {
+  const seen = new Set<string>();
+  const dupes = new Set<string>();
+  for (const item of arr) {
+    if (seen.has(item)) dupes.add(item);
+    else seen.add(item);
+  }
+  return Array.from(dupes);
+};
+
+export const policiesRules: Rule<PoliciesData>[] = [
+  {
+    id: 'POLICY-UNIQUE-IDS',
+    severity: 'error',
+    check(data): Finding[] {
+      const findings: Finding[] = [];
+      const dupes = findDuplicates(data.policies.map((p) => p.id));
+      if (dupes.length > 0) {
+        findings.push({
+          ruleId: 'POLICY-UNIQUE-IDS',
+          severity: 'error',
+          message: `Duplicate policy IDs detected: ${dupes.join(', ')}`,
+        });
+      }
+      return findings;
+    },
+  },
+  {
+    id: 'POLICY-SHAPE',
+    severity: 'error',
+    check(data): Finding[] {
+      const findings: Finding[] = [];
+      for (const p of data.policies) {
+        if (!p.id || p.id.trim() === '') {
+          findings.push({
+            ruleId: 'POLICY-SHAPE',
+            severity: 'error',
+            message: 'Policy entry is missing an "id".',
+          });
+        }
+        if (!p.scope || p.scope.trim() === '') {
+          findings.push({
+            ruleId: 'POLICY-SHAPE',
+            severity: 'error',
+            message: `Policy "${p.id}": missing "scope" description.`,
+          });
+        }
+        if (!p.unit || p.unit.trim() === '') {
+          findings.push({
+            ruleId: 'POLICY-SHAPE',
+            severity: 'error',
+            message: `Policy "${p.id}": missing measurement "unit" (e.g. days, hours, count).`,
+          });
+        }
+        const hasValue = typeof p.value === 'number';
+        const hasBands = Array.isArray(p.bands) && p.bands.length > 0;
+        if (!hasValue && !hasBands) {
+          findings.push({
+            ruleId: 'POLICY-SHAPE',
+            severity: 'error',
+            message: `Policy "${p.id}": must specify either a numeric "value" or a "bands" array.`,
+          });
+        }
+      }
+      return findings;
+    },
+  },
+  {
+    id: 'POLICY-BANDS-ORDER',
+    severity: 'error',
+    check(data): Finding[] {
+      const findings: Finding[] = [];
+      for (const p of data.policies) {
+        if (!p.bands || p.bands.length <= 1) continue;
+        const withMax = p.bands.filter((b) => typeof b.max === 'number') as Array<
+          PolicyBand & { max: number }
+        >;
+        for (let i = 1; i < withMax.length; i++) {
+          const prev = withMax[i - 1]?.max ?? 0;
+          const curr = withMax[i]?.max ?? 0;
+          if (curr <= prev) {
+            findings.push({
+              ruleId: 'POLICY-BANDS-ORDER',
+              severity: 'error',
+              message: `Policy "${p.id}": bands threshold steps must be strictly ascending (found ${prev} -> ${curr}).`,
+            });
+          }
+        }
+      }
+      return findings;
+    },
+  },
+  {
+    id: 'POLICY-REQ-REFS',
+    severity: 'error',
+    check(data, ctx): Finding[] {
+      const findings: Finding[] = [];
+      const reqs = ctx.get<{ requirements: Array<{ id: string }> }>('requirements');
+      if (!reqs) return [];
+
+      const knownReqIds = new Set(reqs.requirements.map((r) => r.id));
+      for (const p of data.policies) {
+        for (const reqId of p.req || []) {
+          if (!knownReqIds.has(reqId)) {
+            findings.push({
+              ruleId: 'POLICY-REQ-REFS',
+              severity: 'error',
+              message: `Policy "${p.id}": references non-existent requirement "${reqId}".`,
+            });
+          }
+        }
+      }
+      return findings;
+    },
+  },
+];
+
+export const policiesMutations: Mutation[] = [
+  {
+    rule: 'POLICY-UNIQUE-IDS',
+    file: 'policies.contract.mjs',
+    find: /(id:\s*['"]([A-Za-z0-9_-]+)['"][\s\S]*?id:\s*['"])[A-Za-z0-9_-]+(['"])/,
+    replace: '$1$2$3',
+  },
+  {
+    rule: 'POLICY-SHAPE',
+    file: 'policies.contract.mjs',
+    find: /unit:\s*['"][^'"]+['"]/,
+    replace: "unit: ''",
+  },
+  {
+    rule: 'POLICY-BANDS-ORDER',
+    file: 'policies.contract.mjs',
+    find: /(max:\s*\d+[\s\S]*?max:\s*)\d+/,
+    replace: '$10',
+  },
+  {
+    rule: 'POLICY-REQ-REFS',
+    file: 'policies.contract.mjs',
+    find: /req:\s*\[['"]([^'"]+)['"]\]/,
+    replace: "req: ['NON_EXISTENT_POLICY_REQ']",
+  },
+];
+
+export function emitPolicies(data: PoliciesData, ctx: EmitCtx): GeneratedFile[] {
+  if (ctx.target === 'ts') {
+    const sorted = [...data.policies].sort((a, b) => a.id.localeCompare(b.id));
+    const ids = sorted.map((p) => `  | '${p.id}'`).join('\n');
+    const content = `// @generated by CDAL (Contract-Driven Agentic Loop)
+// Do not edit manually - changes will be overwritten by 'cdal codegen'.
+
+export type PolicyId =
+${ids};
+
+export const POLICIES = ${JSON.stringify(sorted, null, 2)} as const;
+`;
+    return [{ path: 'policies.ts', content }];
+  }
+
+  if (ctx.target === 'docs') {
+    const sorted = [...data.policies].sort((a, b) => a.id.localeCompare(b.id));
+    let md = '# System Policies Reference\n\n';
+    md += '| Policy ID | Scope | Unit | Value / Bands | Linked Reqs |\n';
+    md += '|---|---|---|---|---|\n';
+    for (const p of sorted) {
+      const val =
+        p.value !== undefined
+          ? String(p.value)
+          : p.bands?.map((b) => `${b.name} (<= ${b.max})`).join(', ') || '-';
+      const reqs = p.req?.map((r) => `\`${r}\``).join(', ') || '-';
+      md += `| **${p.id}** | ${p.scope} | \`${p.unit}\` | ${val} | ${reqs} |\n`;
+    }
+    return [{ path: 'policies.md', content: md }];
+  }
+
+  return [];
+}
+
+export function policies(options?: { file?: string }): ContractKind<PoliciesData> {
+  const file = options?.file ?? 'policies.contract.mjs';
+
+  return {
+    id: 'policies',
+    files: [file],
+    load(mod): PoliciesData {
+      const list = (mod.POLICIES ?? mod.default) as unknown;
+      if (!Array.isArray(list)) {
+        throw new Error('policies contract must export an array "POLICIES".');
+      }
+      return { policies: list as Policy[] };
+    },
+    rules: policiesRules,
+    emit: emitPolicies,
+    mutations: policiesMutations.map((m) => ({ ...m, file })),
+  };
+}

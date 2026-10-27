@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build artifacts
+dist/
+build/
+.turbo/
+.next/
+*.tsbuildinfo
+
+# Test and coverage
+coverage/
+.vitest-results/
+test-results/
+playwright-report/
+
+# Environment and secrets (CRITICAL: never commit .env*)
+.env
+.env.*
+!.env.example
+
+# Logs and OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Temp files
+tmp/
+temp/
+.cdal-temp/
+.cdal/state/
+.cdal/memory/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.vercel
+.env*

@@ -1,0 +1,33 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "command": "npx cdal hook guard-paths"
+      },
+      {
+        "matcher": "Edit|Write",
+        "command": "npx cdal hook guard-forbidden"
+      },
+      {
+        "matcher": "Bash",
+        "command": "npx cdal hook guard-bash"
+      }
+    ],
+    "SessionStart": [
+      {
+        "command": "npx cdal hook session-context"
+      }
+    ],
+    "SubagentStart": [
+      {
+        "command": "npx cdal hook log-subagent"
+      }
+    ],
+    "SubagentStop": [
+      {
+        "command": "npx cdal hook log-subagent"
+      }
+    ]
+  }
+}
