@@ -11,6 +11,11 @@ export interface GuardResult {
 
 export interface CheckWriteOptions {
   role?: string | null;
+  /**
+   * The role was declared by a CDAL role hook (e.g. `guard-paths implementer`), so it
+   * must exist in the config: an unconfigured declared role is denied every write.
+   */
+  requireConfiguredRole?: boolean;
   enforceContract?: boolean;
   skipRules?: string[];
   config?: ResolvedCdalConfig;
@@ -110,6 +115,15 @@ export function checkWrite(
   // 2. Role-based Write Scope Enforcement
   if (role && config?.roles) {
     const roleDef = config.roles[role];
+
+    // Fail closed: a role file declared this role, but nothing defines its write scope.
+    if (!roleDef && options.requireConfiguredRole) {
+      return {
+        blocked: true,
+        rule: 'role-unknown',
+        reason: `Role "${role}" is not configured in cdal.config.mjs, so it has no write scope. Add it to "roles" (CDAL Pro: roles: proRoles) and run \`npx cdalkit sync\`.`,
+      };
+    }
 
     // Check if role is forbidden from touching tests (e.g. implementer)
     if (roleDef?.denyTests && isTestPath(rel)) {

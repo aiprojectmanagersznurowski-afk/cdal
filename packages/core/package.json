@@ -1,6 +1,6 @@
 {
   "name": "@cdal/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core invariant validation, contracts loader, guard & selftest engine for CDAL",
   "license": "Apache-2.0",
   "author": "Michał Sznurowski",

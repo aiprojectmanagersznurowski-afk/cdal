@@ -15,8 +15,13 @@ export interface SyncResult {
   inSync: boolean;
   driftedFiles: string[];
   updatedFiles: string[];
+  /** User-owned files (marked `<!-- cdal:preserve -->`) left untouched. */
+  preservedFiles: string[];
   totalFiles: number;
 }
+
+/** Marks a file as user-owned (e.g. CDAL Pro roles or hand-tuned agents): sync never touches it. */
+export const PRESERVE_MARKER = '<!-- cdal:preserve';
 
 export function syncAdapters(options: SyncOptions): SyncResult {
   const cwd = options.cwd ?? process.cwd();
@@ -45,11 +50,17 @@ export function syncAdapters(options: SyncOptions): SyncResult {
 
   const driftedFiles: string[] = [];
   const updatedFiles: string[] = [];
+  const preservedFiles: string[] = [];
 
   for (const file of filesToSync) {
     const absPath = resolve(cwd, file.path);
     const exists = existsSync(absPath);
     const currentContent = exists ? readFileSync(absPath, 'utf8') : null;
+
+    if (currentContent?.includes(PRESERVE_MARKER)) {
+      preservedFiles.push(file.path);
+      continue;
+    }
 
     if (currentContent !== file.content) {
       if (isCheck) {
@@ -66,6 +77,7 @@ export function syncAdapters(options: SyncOptions): SyncResult {
     inSync: isCheck ? driftedFiles.length === 0 : true,
     driftedFiles,
     updatedFiles,
+    preservedFiles,
     totalFiles: filesToSync.length,
   };
 }

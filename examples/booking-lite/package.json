@@ -1,6 +1,6 @@
 {
   "name": "booking-lite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Example Node/TS reservation app demonstrating Contract-Driven Agentic Loop (CDAL)",
   "type": "module",

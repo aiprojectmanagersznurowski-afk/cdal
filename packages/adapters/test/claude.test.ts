@@ -29,22 +29,51 @@ describe('Claude Code Adapter', () => {
     runtimes: ['claude-code'],
   };
 
+  type HookHandler = { type: string; command: string };
+  type MatcherGroup = { matcher?: string; hooks: HookHandler[] };
+
   // @REQ: CDAL-REQ-ADAPTER-CLAUDE
-  it('generates valid Claude settings with hook entries', () => {
-    const raw = generateClaudeSettings();
-    const parsed = JSON.parse(raw);
-    expect(parsed.hooks.PreToolUse).toBeDefined();
-    expect(
-      parsed.hooks.PreToolUse.some((h: { command: string }) => h.command.includes('guard-paths')),
-    ).toBe(true);
-    expect(
-      parsed.hooks.PreToolUse.some((h: { command: string }) =>
-        h.command.includes('guard-forbidden'),
-      ),
-    ).toBe(true);
-    expect(
-      parsed.hooks.PreToolUse.some((h: { command: string }) => h.command.includes('guard-bash')),
-    ).toBe(true);
+  it('generates settings in the Claude Code hooks schema (matcher groups with typed handlers)', () => {
+    const parsed = JSON.parse(generateClaudeSettings()) as {
+      hooks: Record<string, MatcherGroup[]>;
+    };
+
+    // Claude Code ignores entries that put `command` directly on the matcher group.
+    for (const [event, groups] of Object.entries(parsed.hooks)) {
+      expect(Array.isArray(groups), event).toBe(true);
+      for (const group of groups) {
+        expect(group, event).not.toHaveProperty('command');
+        expect(Array.isArray(group.hooks), event).toBe(true);
+        for (const handler of group.hooks) {
+          expect(handler.type, event).toBe('command');
+          expect(handler.command, event).toMatch(/^npx cdalkit hook /);
+        }
+      }
+    }
+
+    const preToolUse = parsed.hooks.PreToolUse.flatMap((g) =>
+      g.hooks.map((h) => `${g.matcher} -> ${h.command}`),
+    );
+    expect(preToolUse).toContain('Edit|Write|NotebookEdit -> npx cdalkit hook guard-paths');
+    expect(preToolUse).toContain('Edit|Write -> npx cdalkit hook guard-forbidden');
+    expect(preToolUse).toContain('Bash -> npx cdalkit hook guard-bash');
+  });
+
+  // @REQ: CDAL-REQ-ADAPTER-CLAUDE
+  it('writes role hooks in subagent frontmatter using the same schema', () => {
+    const implementer = generateClaudeAgents(dummyConfig).find((a) =>
+      a.path.endsWith('/implementer.md'),
+    );
+    expect(implementer?.content).toContain(
+      [
+        'hooks:',
+        '  PreToolUse:',
+        '    - matcher: "Edit|Write|NotebookEdit"',
+        '      hooks:',
+        '        - type: command',
+        '          command: "npx cdalkit hook guard-paths implementer"',
+      ].join('\n'),
+    );
   });
 
   it('generates agent definitions for all roles in config', () => {

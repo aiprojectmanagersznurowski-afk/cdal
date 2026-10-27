@@ -119,6 +119,36 @@ describe('Hook Router Execution (@cdal/adapters)', () => {
       expect(res.stderr).toContain('physically prohibited from writing or editing test files');
     });
 
+    // @REQ: CDAL-REQ-GUARD-PATH
+    it('blocks a role declared in the hook command that is missing from the config', async () => {
+      const payload = JSON.stringify({
+        agent_type: 'implementer-server',
+        tool_name: 'Write',
+        tool_input: { file_path: 'src/billing.ts', content: 'export {}' },
+      });
+
+      const res = await executeHook('guard-paths', payload, {
+        cwd: TEST_DIR,
+        config: baseConfig,
+        fallbackRole: 'implementer-server',
+      });
+
+      expect(res.exitCode).toBe(2);
+      expect(res.stderr).toContain('not configured');
+    });
+
+    // @REQ: CDAL-REQ-GUARD-PATH
+    it('lets built-in subagents through the global hook outside protected paths', async () => {
+      const payload = JSON.stringify({
+        agent_type: 'general-purpose',
+        tool_name: 'Write',
+        tool_input: { file_path: 'src/billing.ts', content: 'export {}' },
+      });
+
+      const res = await executeHook('guard-paths', payload, { cwd: TEST_DIR, config: baseConfig });
+      expect(res.exitCode).toBe(0);
+    });
+
     it('allows implementer to write production code within write scopes (exit 0)', async () => {
       const payload = JSON.stringify({
         agent_type: 'implementer',

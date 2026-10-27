@@ -65,4 +65,36 @@ describe('cdal doctor CLI command', () => {
       // may exit if some check fails in temp/isolated environment
     }
   });
+
+  // @REQ: CDAL-REQ-DOCTOR
+  it('accepts hooks only in the Claude Code schema and flags the legacy flat format', () => {
+    mkdirSync(join(testDir, '.claude'), { recursive: true });
+    const settingsPath = join(testDir, '.claude/settings.json');
+    const hookCheck = () =>
+      runDoctorChecks(testDir).checks.find((c) => c.name === 'Claude Code Hooks');
+
+    writeFileSync(
+      settingsPath,
+      JSON.stringify({
+        hooks: {
+          PreToolUse: [
+            {
+              matcher: 'Edit|Write|NotebookEdit',
+              hooks: [{ type: 'command', command: 'npx cdalkit hook guard-paths' }],
+            },
+          ],
+        },
+      }),
+    );
+    expect(hookCheck()?.status).toBe('ok');
+
+    writeFileSync(
+      settingsPath,
+      JSON.stringify({
+        hooks: { PreToolUse: [{ matcher: 'Edit|Write', command: 'npx cdal hook guard-paths' }] },
+      }),
+    );
+    expect(hookCheck()?.status).toBe('warn');
+    expect(hookCheck()?.recommendation).toContain('cdalkit sync');
+  });
 });

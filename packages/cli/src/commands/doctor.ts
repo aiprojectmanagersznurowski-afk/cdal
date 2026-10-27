@@ -13,6 +13,35 @@ export interface DoctorCheckResult {
   recommendation?: string;
 }
 
+/**
+ * Claude Code only runs hooks declared as matcher groups with typed handlers:
+ * { matcher, hooks: [{ type: 'command', command }] }. A `command` placed
+ * directly on the group is silently ignored.
+ */
+function inspectClaudeHooks(settings: {
+  hooks?: Record<string, unknown>;
+}): 'ok' | 'legacy-format' | 'missing' {
+  const groups = settings.hooks?.PreToolUse;
+  if (!Array.isArray(groups)) return 'missing';
+  let legacy = false;
+  for (const group of groups as Array<Record<string, unknown>>) {
+    if (typeof group.command === 'string' && /cdal(kit)? hook/.test(group.command)) legacy = true;
+    const handlers = Array.isArray(group.hooks)
+      ? (group.hooks as Array<Record<string, unknown>>)
+      : [];
+    for (const handler of handlers) {
+      if (
+        handler.type === 'command' &&
+        typeof handler.command === 'string' &&
+        /cdal(kit)? hook guard-paths/.test(handler.command)
+      ) {
+        return 'ok';
+      }
+    }
+  }
+  return legacy ? 'legacy-format' : 'missing';
+}
+
 export function runDoctorChecks(
   cwd: string,
   customConfig?: string,
@@ -103,8 +132,11 @@ export function runDoctorChecks(
   const settingsPath = join(cwd, '.claude/settings.json');
   if (existsSync(settingsPath)) {
     try {
-      const settingsContent = readFileSync(settingsPath, 'utf8');
-      if (settingsContent.includes('cdal hook')) {
+      const settings = JSON.parse(readFileSync(settingsPath, 'utf8')) as {
+        hooks?: Record<string, unknown>;
+      };
+      const wiring = inspectClaudeHooks(settings);
+      if (wiring === 'ok') {
         checks.push({
           name: 'Claude Code Hooks',
           status: 'ok',
@@ -114,8 +146,11 @@ export function runDoctorChecks(
         checks.push({
           name: 'Claude Code Hooks',
           status: 'warn',
-          message: '.claude/settings.json exists but does not call `cdal hook`',
-          recommendation: 'Run `cdal sync` to wire quality gate hooks.',
+          message:
+            wiring === 'legacy-format'
+              ? '.claude/settings.json uses a hook format Claude Code ignores, so the CDAL gates never run'
+              : '.claude/settings.json exists but does not wire the CDAL guard-paths hook',
+          recommendation: 'Run `npx cdalkit sync` to regenerate the hook wiring.',
         });
       }
     } catch {

@@ -1,6 +1,6 @@
 {
   "name": "@cdal/kinds",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Standard open-source contract kinds for CDAL (requirements, state-machine, policies)",
   "license": "Apache-2.0",
   "author": "Michał Sznurowski",

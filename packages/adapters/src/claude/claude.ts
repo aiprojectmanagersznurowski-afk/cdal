@@ -3,38 +3,25 @@ import type { ResolvedCdalConfig } from '@cdal/core';
 export const CLAUDE_SECTION_START = '<!-- BEGIN CDAL MANAGED SECTION -->';
 export const CLAUDE_SECTION_END = '<!-- END CDAL MANAGED SECTION -->';
 
+/** One Claude Code matcher group: hook handlers run when the tool name matches. */
+function hookGroup(command: string, matcher?: string) {
+  return {
+    ...(matcher ? { matcher } : {}),
+    hooks: [{ type: 'command', command }],
+  };
+}
+
 export function generateClaudeSettings(): string {
   const settings = {
     hooks: {
       PreToolUse: [
-        {
-          matcher: 'Edit|Write|NotebookEdit',
-          command: 'npx cdalkit hook guard-paths',
-        },
-        {
-          matcher: 'Edit|Write',
-          command: 'npx cdalkit hook guard-forbidden',
-        },
-        {
-          matcher: 'Bash',
-          command: 'npx cdalkit hook guard-bash',
-        },
+        hookGroup('npx cdalkit hook guard-paths', 'Edit|Write|NotebookEdit'),
+        hookGroup('npx cdalkit hook guard-forbidden', 'Edit|Write'),
+        hookGroup('npx cdalkit hook guard-bash', 'Bash'),
       ],
-      SessionStart: [
-        {
-          command: 'npx cdalkit hook session-context',
-        },
-      ],
-      SubagentStart: [
-        {
-          command: 'npx cdalkit hook log-subagent',
-        },
-      ],
-      SubagentStop: [
-        {
-          command: 'npx cdalkit hook log-subagent',
-        },
-      ],
+      SessionStart: [hookGroup('npx cdalkit hook session-context')],
+      SubagentStart: [hookGroup('npx cdalkit hook log-subagent')],
+      SubagentStop: [hookGroup('npx cdalkit hook log-subagent')],
     },
   };
 
@@ -144,7 +131,10 @@ export function generateClaudeAgents(
       ...defaultInfo.tools.map((t) => `  - ${t}`),
       'hooks:',
       '  PreToolUse:',
-      `    - command: "npx cdalkit hook guard-paths ${roleName}"`,
+      '    - matcher: "Edit|Write|NotebookEdit"',
+      '      hooks:',
+      '        - type: command',
+      `          command: "npx cdalkit hook guard-paths ${roleName}"`,
       '---',
       '',
     ].join('\n');

@@ -23,6 +23,7 @@ description: "Complete command-line reference for cdal CLI commands, flags, and 
 | [`cdal hook`](#cdal-hook) | PreToolUse entrypoint for agent runtime hook routing | `--runtime`, `--config` |
 | [`cdal audit`](#cdal-audit) | Scan repository for AI hygiene and export offline HTML report | `--html`, `--json`, `--lang` |
 | [`cdal doctor`](#cdal-doctor) | Diagnose CDAL installation and environment health | — |
+| [`cdal pro install`](#cdal-pro install) | Install CDAL Pro content into the project | `--from`, `--force`, `--dryRun`, `--cwd` |
 
 ---
 
@@ -274,7 +275,7 @@ Runs 8 static checks (< 20s) evaluating agent configuration, type silencing dens
 
 - `--html <file>`: Path to write standalone offline HTML report (default: cdal-audit-report.html)
 - `--json`: Output audit report in audit.v1 JSON schema
-- `--lang <pl|en>`: Report language (default: pl)
+- `--lang <en|pl>`: Report language (default: en)
 
 ### Example
 
@@ -298,6 +299,31 @@ Verifies Node.js version (>=20.9), git repository state, config validity, hook b
 
 ```bash
 npx cdalkit doctor
+```
+
+---
+
+## `cdal pro install`
+
+**Install CDAL Pro content into the project**
+
+```bash
+npx cdalkit pro install [options]
+```
+
+Clones the private cdal-pro repository (access comes with a Pro license) and copies its agent roles, templates and presets into the project as listed in its pro.manifest.json. Existing files are kept unless --force is passed; the installed version is recorded in .cdal/pro.json.
+
+### Options
+
+- `--from <path|git url>`: Local copy or git URL of cdal-pro (default: the private GitHub repository)
+- `--force`: Overwrite files that already exist in the project
+- `--dryRun`: Show what would be installed without writing anything
+- `--cwd <dir>`: Project directory to install into (default: current directory)
+
+### Example
+
+```bash
+npx cdalkit pro install --dryRun
 ```
 
 ---

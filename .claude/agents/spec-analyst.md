@@ -9,7 +9,10 @@ tools:
   - Edit
 hooks:
   PreToolUse:
-    - command: "npx cdalkit hook guard-paths spec-analyst"
+    - matcher: "Edit|Write|NotebookEdit"
+      hooks:
+        - type: command
+          command: "npx cdalkit hook guard-paths spec-analyst"
 ---
 <!-- CDAL GENERATED AGENT ROLE: spec-analyst -->
 

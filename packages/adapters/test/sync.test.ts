@@ -74,6 +74,23 @@ describe('Adapter Synchronization & E2E Role Blocking', () => {
     expect(checkAgain.inSync).toBe(true);
   });
 
+  // @REQ: CDAL-REQ-SYNC
+  it('never overwrites or flags files marked cdal:preserve (CDAL Pro or customized roles)', () => {
+    syncAdapters({ cwd: testDir, config: testConfig, check: false });
+
+    const roleFile = join(testDir, '.claude/agents/implementer.md');
+    const customized = '---\nname: implementer\n---\n<!-- cdal:preserve -->\nCustom instructions\n';
+    writeFileSync(roleFile, customized, 'utf8');
+
+    const checkRes = syncAdapters({ cwd: testDir, config: testConfig, check: true });
+    expect(checkRes.inSync).toBe(true);
+    expect(checkRes.preservedFiles).toContain('.claude/agents/implementer.md');
+
+    const reSync = syncAdapters({ cwd: testDir, config: testConfig, check: false });
+    expect(reSync.updatedFiles).not.toContain('.claude/agents/implementer.md');
+    expect(readFileSync(roleFile, 'utf8')).toBe(customized);
+  });
+
   it('e2e: Next.js fixture blocks implementer role from modifying test files (exit 2)', async () => {
     // Synchronize workspace
     syncAdapters({ cwd: testDir, config: testConfig, check: false });

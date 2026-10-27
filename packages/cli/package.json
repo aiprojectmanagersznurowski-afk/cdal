@@ -1,6 +1,6 @@
 {
   "name": "cdalkit",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Command-line interface and hook router for CDAL (Contract-Driven Agentic Loop)",
   "license": "Apache-2.0",
   "author": "Michał Sznurowski",

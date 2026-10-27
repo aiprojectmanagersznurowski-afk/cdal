@@ -10,7 +10,10 @@ tools:
   - Bash
 hooks:
   PreToolUse:
-    - command: "npx cdalkit hook guard-paths contract-steward"
+    - matcher: "Edit|Write|NotebookEdit"
+      hooks:
+        - type: command
+          command: "npx cdalkit hook guard-paths contract-steward"
 ---
 <!-- CDAL GENERATED AGENT ROLE: contract-steward -->
 

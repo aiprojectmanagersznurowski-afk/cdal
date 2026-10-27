@@ -132,6 +132,30 @@ describe('Role Scope & Test Isolation Enforcement', () => {
     expect(result.blocked).toBe(false);
   });
 
+  // @REQ: CDAL-REQ-GUARD-PATH
+  it('fails closed for a declared role that is not configured', () => {
+    const result = checkWrite('src/index.ts', 'export {}', {
+      role: 'implementer-server',
+      requireConfiguredRole: true,
+      config: baseConfig,
+    });
+    expect(result.blocked).toBe(true);
+    expect(result.rule).toBe('role-unknown');
+    expect(result.reason).toContain('cdal.config.mjs');
+  });
+
+  // @REQ: CDAL-REQ-GUARD-PATH
+  it('checks only protected paths for sessions and undeclared subagents', () => {
+    for (const role of [undefined, 'general-purpose']) {
+      expect(checkWrite('src/index.ts', 'export {}', { role, config: baseConfig }).blocked).toBe(
+        false,
+      );
+      expect(checkWrite('contracts/a.contract.mjs', '', { role, config: baseConfig }).blocked).toBe(
+        true,
+      );
+    }
+  });
+
   it('blocks roles writing outside their declared scopes', () => {
     const result = checkWrite('src/index.ts', 'console.log("hi")', {
       role: 'reviewer',

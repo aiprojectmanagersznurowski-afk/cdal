@@ -53,7 +53,9 @@ export const syncCommand = defineCommand({
             console.error(pc.red(`  - [DRIFT] ${file}`));
           }
           console.error(
-            pc.yellow('\nRun `cdal sync` to synchronize runtime files with cdal.config.mjs.'),
+            pc.yellow(
+              '\nRun `npx cdalkit sync` to synchronize runtime files with cdal.config.mjs.',
+            ),
           );
           process.exit(1);
         }
@@ -69,6 +71,13 @@ export const syncCommand = defineCommand({
         if (res.updatedFiles.length === 0) {
           console.log(pc.dim('  (All files were already up-to-date)'));
         }
+      }
+      if (res.preservedFiles.length > 0) {
+        console.log(
+          pc.dim(
+            `  ${res.preservedFiles.length} file(s) marked cdal:preserve were left untouched.`,
+          ),
+        );
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);

@@ -8,7 +8,10 @@ tools:
   - Bash
 hooks:
   PreToolUse:
-    - command: "npx cdalkit hook guard-paths reviewer"
+    - matcher: "Edit|Write|NotebookEdit"
+      hooks:
+        - type: command
+          command: "npx cdalkit hook guard-paths reviewer"
 ---
 <!-- CDAL GENERATED AGENT ROLE: reviewer -->
 

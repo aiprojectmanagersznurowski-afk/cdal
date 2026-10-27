@@ -3,30 +3,60 @@
     "PreToolUse": [
       {
         "matcher": "Edit|Write|NotebookEdit",
-        "command": "npx cdalkit hook guard-paths"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx cdalkit hook guard-paths"
+          }
+        ]
       },
       {
         "matcher": "Edit|Write",
-        "command": "npx cdalkit hook guard-forbidden"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx cdalkit hook guard-forbidden"
+          }
+        ]
       },
       {
         "matcher": "Bash",
-        "command": "npx cdalkit hook guard-bash"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx cdalkit hook guard-bash"
+          }
+        ]
       }
     ],
     "SessionStart": [
       {
-        "command": "npx cdalkit hook session-context"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx cdalkit hook session-context"
+          }
+        ]
       }
     ],
     "SubagentStart": [
       {
-        "command": "npx cdalkit hook log-subagent"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx cdalkit hook log-subagent"
+          }
+        ]
       }
     ],
     "SubagentStop": [
       {
-        "command": "npx cdalkit hook log-subagent"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx cdalkit hook log-subagent"
+          }
+        ]
       }
     ]
   }

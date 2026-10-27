@@ -24,7 +24,9 @@ export async function executeHook(
       }
       const role = payload.role ?? 'unknown';
       const res = checkWrite(payload.filePath, '', {
-        role,
+        role: role === 'unknown' ? null : role,
+        // A role passed on the hook command line comes from a CDAL role file and must be configured.
+        requireConfiguredRole: Boolean(options.fallbackRole),
         enforceContract: true,
         config,
         cwd,

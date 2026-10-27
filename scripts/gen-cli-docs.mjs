@@ -163,7 +163,7 @@ const COMMANDS = [
         desc: 'Path to write standalone offline HTML report (default: cdal-audit-report.html)',
       },
       { flag: '--json', desc: 'Output audit report in audit.v1 JSON schema' },
-      { flag: '--lang <pl|en>', desc: 'Report language (default: pl)' },
+      { flag: '--lang <en|pl>', desc: 'Report language (default: en)' },
     ],
     example: 'npx cdalkit audit --html ./report.html',
   },
@@ -175,6 +175,26 @@ const COMMANDS = [
       'Verifies Node.js version (>=20.9), git repository state, config validity, hook bindings, and detects configuration drift.',
     options: [],
     example: 'npx cdalkit doctor',
+  },
+  {
+    name: 'pro install',
+    summary: 'Install CDAL Pro content into the project',
+    usage: 'npx cdalkit pro install [options]',
+    description:
+      'Clones the private cdal-pro repository (access comes with a Pro license) and copies its agent roles, templates and presets into the project as listed in its pro.manifest.json. Existing files are kept unless --force is passed; the installed version is recorded in .cdal/pro.json.',
+    options: [
+      {
+        flag: '--from <path|git url>',
+        desc: 'Local copy or git URL of cdal-pro (default: the private GitHub repository)',
+      },
+      { flag: '--force', desc: 'Overwrite files that already exist in the project' },
+      { flag: '--dryRun', desc: 'Show what would be installed without writing anything' },
+      {
+        flag: '--cwd <dir>',
+        desc: 'Project directory to install into (default: current directory)',
+      },
+    ],
+    example: 'npx cdalkit pro install --dryRun',
   },
 ];
 
