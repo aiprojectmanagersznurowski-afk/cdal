@@ -17,8 +17,8 @@ Thank you for your interest in contributing to CDAL Kit!
 
 ```bash
 # Clone the repository
-git clone https://github.com/aiprojectmanagersznurowski-afk/cdal_methodology.git
-cd cdal_methodology
+git clone https://github.com/aiprojectmanagersznurowski-afk/cdal.git
+cd cdal
 
 # Ensure Node.js 22 LTS is used
 nvm use

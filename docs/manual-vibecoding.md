@@ -156,6 +156,6 @@ Confirm you understand these rules and ask me for the first REQ-* requirement.
 
 ## 6. Community & Direct Support
 
-- 📦 **GitHub Repository:** [github.com/aiprojectmanagersznurowski-afk/cdal_methodology](https://github.com/aiprojectmanagersznurowski-afk/cdal_methodology)
+- 📦 **GitHub Repository:** [github.com/aiprojectmanagersznurowski-afk/cdal](https://github.com/aiprojectmanagersznurowski-afk/cdal)
 - 💡 **Free Local Repository Audit:** `npx cdalkit audit`
 - 📬 **Contact & Feedback:** `kontakt@cdal.dev` (response within 24h)

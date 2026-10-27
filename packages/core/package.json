@@ -5,6 +5,14 @@
   "license": "Apache-2.0",
   "author": "Michał Sznurowski",
   "homepage": "https://cdal-henna.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiprojectmanagersznurowski-afk/cdal.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/aiprojectmanagersznurowski-afk/cdal/issues"
+  },
   "keywords": [
     "ai",
     "agents",
