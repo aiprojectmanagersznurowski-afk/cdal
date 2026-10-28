@@ -1,7 +1,7 @@
 import { formatFindingsText, runValidation } from '@cdal/core';
-import { policies, requirements, stateMachine } from '@cdal/kinds';
 import { defineCommand } from 'citty';
 import pc from 'picocolors';
+import { resolveCommandKinds } from '../kinds.js';
 
 export const validateCommand = defineCommand({
   meta: {
@@ -26,13 +26,12 @@ export const validateCommand = defineCommand({
   },
   async run({ args }) {
     try {
-      // Register standard OSS kinds by default
-      const defaultKinds = [requirements(), stateMachine(), policies()];
+      const kinds = await resolveCommandKinds();
 
       const report = await runValidation({
         contractsDir: args.dir,
         strict: Boolean(args.strict),
-        kinds: defaultKinds,
+        kinds,
       });
 
       if (args.json) {

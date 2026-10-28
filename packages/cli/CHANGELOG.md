@@ -1,5 +1,11 @@
 # cdalkit
 
+## 0.1.6
+
+### Patch Changes
+
+- `cdalkit validate` and `cdalkit codegen` use the contract kinds registered in `cdal.config.mjs` (built-in, CDAL Pro or custom). They used to always run only the three built-in kinds, so custom kinds were never validated or generated.
+
 ## 0.1.5
 
 ### Patch Changes

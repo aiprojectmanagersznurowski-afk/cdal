@@ -1,7 +1,7 @@
 import { runCodegen } from '@cdal/core';
-import { policies, requirements, stateMachine } from '@cdal/kinds';
 import { defineCommand } from 'citty';
 import pc from 'picocolors';
+import { resolveCommandKinds } from '../kinds.js';
 
 export const codegenCommand = defineCommand({
   meta: {
@@ -22,12 +22,12 @@ export const codegenCommand = defineCommand({
   },
   async run({ args }) {
     try {
-      const defaultKinds = [requirements(), stateMachine(), policies()];
+      const kinds = await resolveCommandKinds();
 
       const res = await runCodegen({
         contractsDir: args.dir,
         check: Boolean(args.check),
-        kinds: defaultKinds,
+        kinds,
       });
 
       if (args.check) {

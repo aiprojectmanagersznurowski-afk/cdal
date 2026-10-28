@@ -237,7 +237,8 @@ export const REQUIREMENTS = [
     "statement": "System must support modular contract kinds with invariant rules, codegen, and selftest mutations.",
     "acceptance": [
       "Custom contract kinds can register rules",
-      "Cross-kind context is accessible during validation"
+      "Cross-kind context is accessible during validation",
+      "cdal validate and cdal codegen use the kinds registered in cdal.config.mjs (built-in kinds only when none are configured)"
     ],
     "status": "DONE",
     "priority": "HIGH"
